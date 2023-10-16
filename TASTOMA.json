@@ -1,6 +1,6 @@
 {
   "createdWith": "Open Stage Control",
-  "version": "1.22.0",
+  "version": "1.25.1",
   "type": "session",
   "content": {
     "type": "root",
@@ -26,7 +26,7 @@
     "scroll": true,
     "innerPadding": true,
     "hideMenu": false,
-    "variables": "@{parent.variables}",
+    "variables": "@{parent.variables}; VAR{tastoma, 0}",
     "traversing": false,
     "value": "",
     "default": "",
@@ -50,8 +50,8 @@
         "visible": true,
         "interaction": true,
         "comments": "",
-        "width": "auto",
-        "height": "auto",
+        "width": 330,
+        "height": 320,
         "expand": "false",
         "colorText": "auto",
         "colorWidget": "auto",
@@ -265,7 +265,7 @@
         "ignoreDefaults": false,
         "bypass": false,
         "onCreate": "",
-        "onValue": "if (value == 1) {\n   \n}\n\nswitch (\"tastoma\") {\n  case 1:\n    set(\"led_1\", 1)\n    break\n  case 2:\n    set(\"led_2\", 1)\n    break\n}"
+        "onValue": "let val = 0\n\nfunction alloff() {\n  set(\"led_1\", 0)\n  set(\"led_2\", 0)\n  set(\"led_3\", 0)\n  set(\"led_4\", 0)\n}\n\nif (value == 1) {\n  setVar(\"parent\", \"tastoma\", getVar(\"parent\", \"tastoma\") + 1)   \n  val = getVar(\"parent\", \"tastoma\") % 4\n  console.log(val)\n\n  \n  switch (val) {\n    case 0:\n      alloff()\n      set(\"led_1\", 1)\n      send(\"/channel\", 1)\n      break\n    case 1:\n      alloff()\n      set(\"led_2\", 1)\n      send(\"/channel\", 2)\n      break\n    case 2:\n      alloff()\n      set(\"led_3\", 1)\n      send(\"/channel\", 3)\n      break\n    case 3:\n      alloff()\n      set(\"led_4\", 1)\n      send(\"/channel\", 4)\n      break\n  }\n}"
       },
       {
         "type": "led",
@@ -353,6 +353,6 @@
       }
     ],
     "tabs": [],
-    "verticalTabs": false
+    "tabsPosition": "top"
   }
 }
